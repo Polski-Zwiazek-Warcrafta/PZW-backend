@@ -22,14 +22,14 @@ jwt = JWTManager(app)
 @app.route('/register', methods=['POST'])
 def register():
     data = request.json
-    # Check if the user already exists
+    # check if user exists
     if users_collection.find_one({"username": data['username']}):
         return jsonify({"message": "User already exists"}), 400
 
-    # Hash the user's password
+    # hash the user password
     hashed_password = generate_password_hash(data['password'], method='sha256')
      
-    # Insert new user into the MongoDB collection
+    # insert new user into the MongoDB collection
     users_collection.insert_one({"username": data['username'], "password_hash": hashed_password})
     
     return jsonify({"message": "User registered successfully"}), 201
@@ -37,21 +37,21 @@ def register():
 @app.route('/login', methods=['POST'])
 def login():
     data = request.json
-    # Find the user in the database
+    # find the user in the database
     user = users_collection.find_one({"username": data['username']})
 
     if user and check_password_hash(user['password_hash'], data['password']):
-        # Create JWT token
+        # create JWT token
         access_token = create_access_token(identity=user['username'])
         return jsonify(access_token=access_token)
 
     return jsonify({"message": "Invalid credentials"}), 401
 
 @app.route('/protected', methods=['GET'])
-@jwt_required()
+@jwt_required() # only authenticated users with a valid JWT token can access the route
 def protected():
-    current_user = get_jwt_identity()
-    return jsonify(logged_in_as=current_user), 200
+    current_user = get_jwt_identity() # user identity from the JWT token 
+    return jsonify(logged_in_as=current_user), 200 # SON response with the logged-in user’s identity
 
 if __name__ == '__main__':
     app.run(debug=True)
