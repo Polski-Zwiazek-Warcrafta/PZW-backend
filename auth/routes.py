@@ -20,7 +20,7 @@ def register():
         "password_hash": hashed_password,
         "isAdmin": data.get("isAdmin", False),  
         "createdAt": datetime.utcnow(),
-        "updatedAt": datetime.utcnow(),
+        "updatedAt": None,
         "deletedAt": None 
     }
 

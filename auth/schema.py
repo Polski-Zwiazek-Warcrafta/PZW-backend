@@ -1,7 +1,7 @@
 user_schema = {
     "$jsonSchema": {
         "bsonType": "object",
-        "required": ["username", "password_hash", "createdAt", "updatedAt"],
+        "required": ["username", "password_hash"],
         "properties": {
             "username": {
                 "bsonType": "string",
@@ -16,11 +16,11 @@ user_schema = {
                 "description": "Admin flag, defaults to false",
             },
             "createdAt": {
-                "bsonType": "date",
+                "bsonType": ["date", "null"],
                 "description": "Timestamp of creation"
             },
             "updatedAt": {
-                "bsonType": "date",
+                "bsonType": ["date", "null"],
                 "description": "Timestamp of last update"
             },
             "deletedAt": {
