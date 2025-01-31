@@ -13,7 +13,7 @@ def register():
     if users_collection.find_one({"username": data['username']}):
         return jsonify({"message": "User already exists"}), 400
 
-    hashed_password = generate_password_hash(data['password'], method='sha256')
+    hashed_password = generate_password_hash(data['password'], method='pbkdf2:sha256')
     
     user_data = {
         "username": data['username'],
