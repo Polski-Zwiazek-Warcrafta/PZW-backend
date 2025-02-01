@@ -4,7 +4,6 @@ from flask_jwt_extended import JWTManager
 import os
 from dotenv import load_dotenv
 from pymongo import MongoClient
-from pymongo.errors import ConnectionFailure 
 from urllib.parse import quote_plus
 
 from auth.routes import auth_bp
